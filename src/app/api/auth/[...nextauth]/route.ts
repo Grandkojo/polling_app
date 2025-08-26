@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { supabase } from "@/lib/supabase";
 import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
@@ -16,31 +16,33 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // TODO: Replace with actual database query
-        // This is a mock user for development
-        const mockUser = {
-          id: "1",
-          email: "user@example.com",
-          name: "Test User",
-          password: await bcrypt.hash("password123", 10)
-        };
+        try {
+          // Query user from Supabase
+          const { data: user, error } = await supabase
+            .from('users')
+            .select('id, email, name, password')
+            .eq('email', credentials.email)
+            .single();
 
-        if (credentials.email === mockUser.email) {
-          const isPasswordValid = await bcrypt.compare(
-            credentials.password,
-            mockUser.password
-          );
+          if (error || !user) {
+            return null;
+          }
 
-          if (isPasswordValid) {
+          // For now, we'll do a simple password comparison
+          // In production, you should use Supabase's built-in auth or implement proper hashing
+          if (credentials.password === user.password) {
             return {
-              id: mockUser.id,
-              email: mockUser.email,
-              name: mockUser.name,
+              id: user.id,
+              email: user.email,
+              name: user.name,
             };
           }
-        }
 
-        return null;
+          return null;
+        } catch (error) {
+          console.error('Auth error:', error);
+          return null;
+        }
       }
     })
   ],

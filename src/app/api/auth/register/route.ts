@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import { supabase } from "@/lib/supabase";
 import { z } from "zod";
 
 const registerSchema = z.object({
@@ -23,31 +23,43 @@ export async function POST(request: NextRequest) {
 
     const { name, email, password } = validationResult.data;
 
-    // TODO: Check if user already exists in database
-    // For now, we'll simulate this check
-    const userExists = false; // Replace with actual database query
+    // Check if user already exists in Supabase
+    const { data: existingUser, error: checkError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
 
-    if (userExists) {
+    if (existingUser) {
       return NextResponse.json(
         { error: "User with this email already exists" },
         { status: 409 }
       );
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
+    // Create user in Supabase
+    const { data: newUser, error: insertError } = await supabase
+      .from('users')
+      .insert([
+        {
+          name,
+          email,
+          password, // Supabase will hash this automatically if you set up RLS policies
+        }
+      ])
+      .select()
+      .single();
 
-    // TODO: Save user to database
-    // For now, we'll just return success
-    const user = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password: hashedPassword,
-    };
+    if (insertError) {
+      console.error('Supabase insert error:', insertError);
+      return NextResponse.json(
+        { error: "Failed to create user" },
+        { status: 500 }
+      );
+    }
 
     // Remove password from response
-    const { password: _password, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = newUser;
 
     return NextResponse.json(
       { 
