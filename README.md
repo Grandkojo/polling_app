@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Polling App
 
-## Getting Started
+A modern, full-stack polling application built with Next.js, NextAuth.js, and Supabase.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **User Authentication**: Secure registration and login system
+- **Password Security**: Bcrypt hashing with 12 salt rounds
+- **Session Management**: JWT-based authentication with NextAuth.js
+- **Responsive Design**: Beautiful UI built with Tailwind CSS
+- **TypeScript**: Full type safety throughout the application
+- **Database Integration**: Supabase backend for data persistence
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS
+- **Authentication**: NextAuth.js
+- **Database**: Supabase
+- **Password Hashing**: bcryptjs
+- **Validation**: Zod
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   └── auth/
+│   │       ├── [...nextauth]/route.ts    # NextAuth configuration
+│   │       └── register/route.ts         # User registration API
+│   ├── auth/
+│   │   ├── login/page.tsx                # Login page
+│   │   └── register/page.tsx             # Registration page
+│   ├── dashboard/page.tsx                # Protected dashboard
+│   ├── layout.tsx                        # Root layout with providers
+│   └── page.tsx                          # Landing page
+├── components/
+│   ├── LoginForm.tsx                     # Login form component
+│   ├── RegisterForm.tsx                  # Registration form component
+│   └── Providers.tsx                     # Session provider wrapper
+├── lib/
+│   └── supabase.ts                       # Supabase client configuration
+└── types/
+    └── auth.ts                           # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔐 Authentication Flow
 
-## Learn More
+1. **Registration**: Users can create accounts at `/auth/register`
+2. **Login**: Users authenticate at `/auth/login`
+3. **Dashboard**: Protected route accessible after authentication
+4. **Session Management**: Automatic session handling with NextAuth.js
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 UI Components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Landing Page**: Marketing page with app introduction
+- **Login Form**: Email/password authentication
+- **Registration Form**: User account creation
+- **Dashboard**: Protected user area (placeholder for future features)
+- **Navigation**: Clean, responsive navigation between pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔒 Security Features
 
-## Deploy on Vercel
+- **Password Hashing**: Bcrypt with 12 salt rounds
+- **CSRF Protection**: Built-in NextAuth.js protection
+- **Session Security**: JWT-based secure sessions
+- **Input Validation**: Zod schema validation
+- **Environment Variables**: Secure configuration management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📱 Responsive Design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application is fully responsive and works on:
+- Desktop computers
+- Tablets
+- Mobile devices
+- All modern browsers
+
+## 🚧 Current Status
+
+### ✅ Completed
+- User authentication system
+- Registration and login forms
+- Password security implementation
+- Supabase integration
+- Responsive UI design
+- TypeScript setup
+- Session management
+
+### 🔄 In Progress
+- Core polling functionality
+- Database schema design
+
+### 📋 Planned Features
+- Create and manage polls
+- Real-time voting
+- Results visualization
+- User profiles
+- Poll sharing
+- Analytics dashboard
+
+## 🧪 Testing
+
+The app includes test credentials for development:
+- **Email**: `user@example.com`
+- **Password**: `password123`
+
+## 📝 API Endpoints
+
+- `POST /api/auth/register` - User registration
+- `GET/POST /api/auth/[...nextauth]` - NextAuth.js endpoints
+- `GET /dashboard` - Protected dashboard (requires auth)
+
+
+
+## 🆘 Support
+
+If you encounter any issues:
+1. Check the console for error messages
+2. Verify your environment variables
+3. Ensure Supabase is properly configured
+4. Check the terminal logs for compilation errors
+
+## 🔮 Future Enhancements
+
+- Email verification
+- Password reset functionality
+- Social authentication (Google, GitHub)
+- Real-time updates with WebSockets
+- Advanced analytics
+- Mobile app
+- API rate limiting
+- Multi-language support
+
+---
+
+Built with ❤️ using Next.js and Supabase
