@@ -56,11 +56,30 @@ src/
 
 ## 🎨 UI Components
 
-- **Landing Page**: Marketing page with app introduction
-- **Login Form**: Email/password authentication
-- **Registration Form**: User account creation
-- **Dashboard**: Protected user area (placeholder for future features)
-- **Navigation**: Clean, responsive navigation between pages
+### Landing Page
+![Landing Page](/public/imgs/landing_page.png)
+
+*Marketing page with app introduction and call-to-action buttons*
+
+### Authentication Pages
+![Login Form](/public/imgs/login.png)
+*Email/password authentication with form validation*
+
+![Registration Form](/public/imgs/register.png)
+*User account creation with password confirmation*
+
+### Dashboard
+![Dashboard](/public/imgs/dashboard.png)
+*Protected user area accessible after authentication*
+
+### Development Process
+![AI Development Process](/public/imgs/cursor_prompt_response2.png)
+![AI Development Process](/public/imgs/cursor_prompt_response1.png)
+*Screenshots showing the AI-assisted development workflow*
+
+### Supabase Integration
+![Supabase Setup](/public/imgs/supabase.png)
+*Database and authentication backend setup*
 
 ## 🔒 Security Features
 
