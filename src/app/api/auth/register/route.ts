@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -37,6 +38,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Hash password before storing
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     // Create user in Supabase
     const { data: newUser, error: insertError } = await supabase
       .from('users')
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
         {
           name,
           email,
-          password, // Supabase will hash this automatically if you set up RLS policies
+          password: hashedPassword,
         }
       ])
       .select()

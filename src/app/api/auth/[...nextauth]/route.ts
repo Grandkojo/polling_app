@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { supabase } from "@/lib/supabase";
 import { NextAuthOptions } from "next-auth";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -28,9 +29,10 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          // For now, we'll do a simple password comparison
-          // In production, you should use Supabase's built-in auth or implement proper hashing
-          if (credentials.password === user.password) {
+          // Compare hashed password
+          const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+          
+          if (isPasswordValid) {
             return {
               id: user.id,
               email: user.email,
