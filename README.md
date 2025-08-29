@@ -23,24 +23,38 @@ A modern, full-stack polling application built with Next.js, NextAuth.js, and Su
 ## 📁 Project Structure
 
 ```
-src/
 ├── app/
 │   ├── api/
-│   │   └── auth/
-│   │       ├── [...nextauth]/route.ts    # NextAuth configuration
-│   │       └── register/route.ts         # User registration API
+│   │   ├── auth/
+│   │   │   ├── [...nextauth]/route.ts    # NextAuth configuration
+│   │   │   └── register/route.ts         # User registration API
+│   │   └── polls/
+│   │       ├── route.ts                  # Polls CRUD operations
+│   │       └── [id]/route.ts             # Individual poll operations
 │   ├── auth/
 │   │   ├── login/page.tsx                # Login page
 │   │   └── register/page.tsx             # Registration page
+│   ├── polls/
+│   │   ├── page.tsx                      # Browse all polls
+│   │   ├── create/page.tsx               # Create new poll
+│   │   └── [id]/page.tsx                 # View individual poll
 │   ├── dashboard/page.tsx                # Protected dashboard
 │   ├── layout.tsx                        # Root layout with providers
 │   └── page.tsx                          # Landing page
 ├── components/
+│   ├── ui/                               # Shadcn/ui components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   └── form.tsx
 │   ├── LoginForm.tsx                     # Login form component
 │   ├── RegisterForm.tsx                  # Registration form component
+│   ├── Navigation.tsx                    # Main navigation component
 │   └── Providers.tsx                     # Session provider wrapper
 ├── lib/
-│   └── supabase.ts                       # Supabase client configuration
+│   ├── supabase.ts                       # Supabase client configuration
+│   └── utils.ts                          # Shadcn utility functions
 └── types/
     └── auth.ts                           # TypeScript type definitions
 ```

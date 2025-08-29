@@ -4,25 +4,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Navigation */}
-        <nav className="flex justify-between items-center py-6">
-          <div className="text-2xl font-bold text-indigo-600">Polling App</div>
-          <div className="flex space-x-4">
-            <Link
-              href="/auth/login"
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/register"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 font-medium"
-            >
-              Sign Up
-            </Link>
-          </div>
-        </nav>
-
         {/* Hero Section */}
         <main className="flex flex-col items-center justify-center min-h-[80vh] text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
