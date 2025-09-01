@@ -23,14 +23,6 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
    - **anon public**: Use this for `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - **service_role secret**: Use this for `SUPABASE_SERVICE_ROLE_KEY`
 
-## Example Values
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXItcHJvamVjdC1pZCIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjM5NzQ5NjAwLCJleHAiOjE5NTUzMjU2MDB9.your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXItcHJvamVjdC1pZCIsInJvbGUiOiJzZXJ2aWNlX3JvbGUiLCJpYXQiOjE2Mzk3NDk2MDAsImV4cCI6MTk1NTMyNTYwMH0.your-service-role-key-here
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
 
 ## Important Notes
 
