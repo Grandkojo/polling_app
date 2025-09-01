@@ -38,7 +38,7 @@ export default function CreatePollForm() {
   });
 
   const addOption = () => {
-    if (formData.options.length < 10) {
+    if (formData.options.length < 5) {
       setFormData(prev => ({
         ...prev,
         options: [...prev.options, '']
@@ -201,7 +201,7 @@ export default function CreatePollForm() {
                 </div>
               ))}
             </div>
-            {formData.options.length < 10 && (
+            {formData.options.length < 5 && (
               <Button
                 type="button"
                 variant="outline"
@@ -214,7 +214,7 @@ export default function CreatePollForm() {
               </Button>
             )}
             <p className="text-sm text-gray-500">
-              Add at least 2 options (max 10)
+              Add at least 2 options (max 5)
             </p>
           </div>
 
