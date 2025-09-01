@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "./AuthProvider";
 
 export default function Navigation() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -38,6 +40,25 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+            
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Welcome, {user.name}</span>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Link href="/auth/login">
+                <Button size="sm">
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
