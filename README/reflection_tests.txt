@@ -1,0 +1,11 @@
+My reflection on the AI generated Tests
+
+I used the chat based approach, the files and dependencies were all generated.
+
+At the beginning, only a few passed, but some of the tests needed a mock before working
+
+After inspecting, and a few tweaks, i got the tests working
+
+What didn't work were some complex operations which needs a complex mockinn which was eventually removed because it didn't affect the application
+
+What suprised me was how quickly the AI was able to generate the mock from the mocks, and how easy i was able to test the applicaton at the current state
