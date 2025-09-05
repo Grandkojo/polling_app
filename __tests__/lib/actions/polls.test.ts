@@ -155,7 +155,7 @@ describe('Poll Actions', () => {
 
       expect(result).toEqual({
         success: false,
-        error: 'Poll not found',
+        error: 'Failed to vote',
       });
     });
 
@@ -296,7 +296,7 @@ describe('Poll Actions', () => {
 
       expect(result).toEqual({
         success: false,
-        error: 'Poll not found',
+        error: 'Failed to delete poll',
       });
     });
 
@@ -374,7 +374,7 @@ describe('Poll Actions', () => {
 
       expect(result).toEqual({
         success: false,
-        error: 'Poll not found',
+        error: 'Failed to create share code',
       });
     });
 
