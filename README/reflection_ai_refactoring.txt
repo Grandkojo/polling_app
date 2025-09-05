@@ -1,0 +1,16 @@
+At the first prompt for refactoring, the ai gave me areas
+i can improve, i thought they were great, so after the first refactor, when i reviewed
+i found out that it was compromising the benefits of typscript.
+And it over-engineered the whole original code.
+
+So i gave it the new and the exiting and tell me the state of the code
+giving it some benchmarks
+
+eg: Was performance improved in theory or in practice?
+    Would you keep this refactor in production?
+
+That's where  realised they were some errors and bugs
+So i did a new refactoring focusing on specific improvements such 
+as having a type safety, and early error returning to reduce unnecessary processing
+
+The tests also was changed to match the new state, and all working
