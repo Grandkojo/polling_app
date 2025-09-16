@@ -10,6 +10,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast, Toaster } from 'react-hot-toast';
+import ShareButton from '@/components/ShareButton';
 
 export default function PollPage() {
   const params = useParams();
@@ -202,6 +203,17 @@ export default function PollPage() {
         {poll.description && (
           <p className="text-gray-600 mt-2">{poll.description}</p>
         )}
+        {poll.is_public && (
+          <div className="mt-4">
+            <ShareButton
+              pollId={poll.id}
+              pollTitle={poll.title}
+              userId={user?.id || 'anonymous'}
+              variant="default"
+              size="sm"
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex justify-center">
@@ -216,6 +228,13 @@ export default function PollPage() {
               </div>
               {user && poll.created_by === user.id && (
                 <div className="flex items-center space-x-2">
+                  <ShareButton
+                    pollId={poll.id}
+                    pollTitle={poll.title}
+                    userId={user.id}
+                    variant="outline"
+                    size="sm"
+                  />
                   <Link href={`/polls/${poll.id}/edit`}>
                     <Button variant="outline" size="sm">
                       <Edit className="h-4 w-4 mr-1" />
