@@ -2,6 +2,87 @@
 
 A modern, full-stack polling application built with Next.js, NextAuth.js, and Supabase.
 
+## 📣 Capstone Project Plan
+
+### 🔖 Project Title & Description
+
+**Title**: Polling App – Shareable, Real‑Time Polls with QR Codes
+
+**Description**: A Next.js app for creating, sharing, and voting on polls. Users can authenticate, create polls with multiple options, share via unique links and QR codes, and view results in real time. Designed for event hosts, educators, product teams, and community managers who need fast audience feedback.
+
+**Why it matters**: Polls are a low-friction way to collect insights. This project emphasizes a strong developer experience (DX) with Server Components and Server Actions, secure authentication with Supabase, and AI-assisted workflows to speed up delivery while maintaining quality.
+
+### 🛠️ Tech Stack
+
+- **Language**: TypeScript
+- **Framework**: Next.js (App Router)
+- **Database & Auth**: Supabase (Postgres, RLS, Auth)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **State**: Server Components for server state, minimal Client Components with `useState`/`useReducer` for interactivity
+- **Mutations**: Next.js Server Actions
+- **QR Codes**: `qrcode.react`
+- **Testing**: Jest + React Testing Library, Next.js testing utilities
+- **Linting/Formatting**: ESLint, Prettier
+- **CI/CD**: GitHub Actions (planned)
+
+### 🧠 AI Integration Strategy
+
+- **Code generation**:
+  - Use IDE agent (Cursor) to scaffold features: Server Actions, pages in `/app`, components in `/components`, and Supabase queries in `/lib`.
+  - Generate boilerplate forms using shadcn/ui patterns and Zod validation stubs where needed.
+  - Enforce project conventions: App Router, Server Components for data fetching, Server Actions for mutations.
+- **Testing**:
+  - Prompt AI to draft unit/integration tests (Jest + RTL) mirroring user flows: auth, create poll, vote, share, and result rendering.
+  - Generate test data factories and Supabase test helpers for isolated runs.
+- **Documentation**:
+  - Generate and maintain README sections, feature docs, and migration notes.
+  - Ask AI to produce docstrings for complex utilities in `lib/` and for Server Actions with clear input/output and error cases.
+- **Context-aware techniques**:
+  - Provide the AI with: file tree snapshots, diffs, API and DB schemas (`/database/schema.sql`), and relevant code snippets.
+  - Use structured prompts to review PRs, summarize changes, and recommend refactors.
+- **AI-powered reviews & release notes**:
+  - Use CodeRabbit (or similar) to produce PR reviews and generate release notes per milestone.
+
+### 📦 Scope & Feature Roadmap
+
+- **MVP (existing + finalize)**
+  - Auth (register/login) with Supabase and NextAuth.js
+  - Create/view polls, vote via server actions
+  - Shareable links and QR code generation per poll
+
+- **Capstone Enhancements**
+  - 🔒 User role management (admin vs regular)
+  - 📊 Poll result charts (consider `chart.js` via `react-chartjs-2`, pending approval)
+  - 💬 Comments/discussion on each poll
+  - 📱 Mobile responsiveness & a11y improvements
+  - ✉️ Email notifications (e.g., poll closing alerts)
+  - 🧪 Unit & integration tests (Jest/RTL)
+  - 🧠 AI-powered reviews and automated release notes
+  - 📷 QR codes for every poll (already planned)
+
+### 🗺️ Milestones
+
+1. Foundation hardening (auth, DB, RLS, core polls CRUD, voting server actions)
+2. Sharing & QR codes; unique share codes; share page UX
+3. Role management (admin capabilities: manage polls/users, moderate comments)
+4. Results visualization (charts) and real-time updates UX polish
+5. Comments/discussion threads with moderation tools
+6. Notifications (scheduled/triggered emails for poll closing or activity)
+7. Testing coverage (unit + integration) and CI pipeline
+8. Accessibility, performance pass, and release notes automation
+
+### ✅ Definition of Done (Verification Checklist)
+
+- Uses Next.js App Router with Server Components for data fetching
+- All mutations implemented as Server Actions (no client-side fetch for forms)
+- Supabase client used for all DB interactions; RLS policies in place
+- shadcn/ui components used for UI; Tailwind for styles
+- No secrets hardcoded; Supabase keys from environment variables
+- QR codes generated with `qrcode.react` and share pages functional
+- Tests for critical flows (auth, create poll, vote, share, view results) pass in CI
+- README updated with plan, setup, and usage; AI workflow documented
+
+
 ## 🚀 Features
 
 - **User Authentication**: Secure registration and login system
