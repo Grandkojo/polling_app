@@ -7,6 +7,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -14,6 +15,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
+  isAdmin: boolean;
+  isModerator: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,7 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     id: session.user.id,
     name: session.user.name || '',
     email: session.user.email || '',
+    role: session.user.role || 'user',
   } : null;
+
+  const isAdmin = user?.role === 'admin';
+  const isModerator = user?.role === 'moderator' || user?.role === 'admin';
 
   const login = async (email: string, password: string) => {
     // This will be handled by the LoginForm component using NextAuth
@@ -41,7 +48,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user, 
       login, 
       logout, 
-      loading: status === 'loading' 
+      loading: status === 'loading',
+      isAdmin,
+      isModerator
     }}>
       {children}
     </AuthContext.Provider>

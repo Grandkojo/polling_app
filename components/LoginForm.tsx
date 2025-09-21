@@ -49,21 +49,29 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+    <form className="mt-8 space-y-6" onSubmit={handleSubmit} noValidate>
       {message && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
+        <div 
+          className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md"
+          role="status"
+          aria-live="polite"
+        >
           {message}
         </div>
       )}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+        <div 
+          className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md"
+          role="alert"
+          aria-live="assertive"
+        >
           {error}
         </div>
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email address
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            Email address <span className="text-red-500" aria-label="required">*</span>
           </label>
           <input
             id="email"
@@ -71,15 +79,17 @@ export default function LoginForm() {
             type="email"
             autoComplete="email"
             required
-            className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Enter your email"
+            aria-describedby={error ? "email-error" : undefined}
+            className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm min-h-[44px]"
+            placeholder="Enter your email address"
             value={formData.email}
             onChange={handleChange}
+            aria-invalid={error ? "true" : "false"}
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            Password <span className="text-red-500" aria-label="required">*</span>
           </label>
           <input
             id="password"
@@ -87,10 +97,12 @@ export default function LoginForm() {
             type="password"
             autoComplete="current-password"
             required
-            className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            aria-describedby={error ? "password-error" : undefined}
+            className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm min-h-[44px]"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
+            aria-invalid={error ? "true" : "false"}
           />
         </div>
       </div>
@@ -99,7 +111,8 @@ export default function LoginForm() {
         <div className="text-sm">
           <Link
             href="/auth/forgot-password"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md px-1 py-1"
+            aria-label="Reset your password if you forgot it"
           >
             Forgot your password?
           </Link>
@@ -110,8 +123,12 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px] transition-colors"
+          aria-describedby={loading ? "loading-text" : undefined}
         >
+          <span id="loading-text" className="sr-only">
+            {loading ? "Signing you in, please wait" : "Sign in to your account"}
+          </span>
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </div>
@@ -121,7 +138,8 @@ export default function LoginForm() {
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/register"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md px-1 py-1"
+            aria-label="Create a new account"
           >
             Sign up here
           </Link>

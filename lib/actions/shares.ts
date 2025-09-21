@@ -14,6 +14,81 @@ function logError(prefix: string, error: unknown): void {
 }
 
 /**
+ * Get existing share code for a poll
+ */
+export async function getExistingShareCode(
+  pollId: string
+): Promise<ActionResult<{ shareCode: string; shareUrl: string }>> {
+  try {
+    const { data: existingShare, error } = await (supabaseAdmin as any)
+      .from('poll_shares')
+      .select('share_code')
+      .eq('poll_id', pollId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+      throw error;
+    }
+
+    if (existingShare) {
+      const shareUrl = generateShareUrl(existingShare.share_code);
+      return {
+        success: true,
+        shareCode: existingShare.share_code,
+        shareUrl
+      };
+    }
+
+    return { success: false, error: 'No existing share code found' };
+  } catch (error) {
+    logError('Error getting existing share code:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Failed to get existing share code' 
+    };
+  }
+}
+
+/**
+ * Get or create a share code for a poll (reuses existing if available)
+ */
+export async function getOrCreateShareCode(
+  pollId: string,
+  userId: string,
+  expiresAt?: string
+): Promise<ActionResult<{ shareCode: string; shareUrl: string; isReusingExisting?: boolean }>> {
+  try {
+    // First, try to get existing share code
+    const existingResult = await getExistingShareCode(pollId);
+    if (existingResult.success) {
+      return {
+        ...existingResult,
+        isReusingExisting: true
+      };
+    }
+
+    // If no existing share code, create a new one
+    const newResult = await generateShareCode(pollId, userId, expiresAt);
+    if (newResult.success) {
+      return {
+        ...newResult,
+        isReusingExisting: false
+      };
+    }
+    
+    return newResult;
+  } catch (error) {
+    logError('Error getting or creating share code:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Failed to get or create share code' 
+    };
+  }
+}
+
+/**
  * Generate a share code for a poll
  */
 export async function generateShareCode(

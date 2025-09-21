@@ -51,22 +51,22 @@ A modern, full-stack polling application built with Next.js, NextAuth.js, and Su
   - Shareable links and QR code generation per poll
 
 - **Capstone Enhancements**
-  - 🔒 User role management (admin vs regular)
-  - 📊 Poll result charts (consider `chart.js` via `react-chartjs-2`, pending approval)
-  - 💬 Comments/discussion on each poll
+  - ✅ 🔒 User role management (admin vs regular)
+  - ✅ 📊 Poll result charts (chart.js via react-chartjs-2)
+  - ✅ 💬 Comments/discussion on each poll
   - 📱 Mobile responsiveness & a11y improvements
   - ✉️ Email notifications (e.g., poll closing alerts)
   - 🧪 Unit & integration tests (Jest/RTL)
   - 🧠 AI-powered reviews and automated release notes
-  - 📷 QR codes for every poll (already planned)
+  - ✅ 📷 QR codes for every poll
 
 ### 🗺️ Milestones
 
-1. Foundation hardening (auth, DB, RLS, core polls CRUD, voting server actions)
-2. Sharing & QR codes; unique share codes; share page UX
-3. Role management (admin capabilities: manage polls/users, moderate comments)
-4. Results visualization (charts) and real-time updates UX polish
-5. Comments/discussion threads with moderation tools
+1. ✅ Foundation hardening (auth, DB, RLS, core polls CRUD, voting server actions)
+2. ✅ Sharing & QR codes; unique share codes; share page UX
+3. ✅ Role management (admin capabilities: manage polls/users, moderate comments)
+4. ✅ Results visualization (charts) and real-time updates UX polish
+5. ✅ Comments/discussion threads with moderation tools
 6. Notifications (scheduled/triggered emails for poll closing or activity)
 7. Testing coverage (unit + integration) and CI pipeline
 8. Accessibility, performance pass, and release notes automation

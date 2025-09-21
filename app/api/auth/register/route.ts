@@ -7,6 +7,7 @@ const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  role: z.enum(['user', 'admin', 'moderator']).optional().default('user'),
 });
 
 export async function POST(request: NextRequest) {
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, password } = validationResult.data;
+    const { name, email, password, role } = validationResult.data;
 
     // Check if user already exists in Supabase
     const { data: existingUser, error: checkError } = await supabase
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
           name,
           email,
           password: hashedPassword,
+          role: role || 'user',
         }
       ])
       .select()

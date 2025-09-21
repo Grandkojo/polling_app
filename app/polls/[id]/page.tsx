@@ -11,10 +11,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast, Toaster } from 'react-hot-toast';
 import ShareButton from '@/components/ShareButton';
+import PollResultsChart, { PollResult } from '@/components/PollResultsChart';
+import CommentList from '@/components/CommentList';
+import CommentModeration from '@/components/CommentModeration';
 
 export default function PollPage() {
   const params = useParams();
-  const { user } = useAuth();
+  const { user, isAdmin, isModerator } = useAuth();
   const router = useRouter();
   const [poll, setPoll] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -22,6 +25,9 @@ export default function PollPage() {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [hasVoted, setHasVoted] = useState(false);
   const [voting, setVoting] = useState(false);
+  const [chartResults, setChartResults] = useState<PollResult[]>([]);
+  const [showResults, setShowResults] = useState(false);
+  const [comments, setComments] = useState<any[]>([]);
 
   const fetchPoll = async () => {
     try {
@@ -64,11 +70,21 @@ export default function PollPage() {
       // Calculate total votes
       const totalVotes = allVotes?.length || 0;
 
+      // Prepare chart results data
+      const chartData: PollResult[] = optionsWithVotes.map((option: any) => ({
+        option_id: option.id,
+        option_text: option.text,
+        vote_count: option.votes_count || 0,
+        percentage: totalVotes > 0 ? ((option.votes_count || 0) / totalVotes * 100) : 0
+      }));
+
       setPoll({
         ...data,
         poll_options: optionsWithVotes,
         total_votes: totalVotes
       });
+
+      setChartResults(chartData);
 
       // Check if user has already voted
       if (user?.id) {
@@ -90,9 +106,33 @@ export default function PollPage() {
     }
   };
 
+  const fetchComments = async () => {
+    if (!isAdmin && !isModerator) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('comments')
+        .select(`
+          *,
+          users(name)
+        `)
+        .eq('poll_id', params.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching comments:', error);
+      } else {
+        setComments(data || []);
+      }
+    } catch (err) {
+      console.error('Error fetching comments:', err);
+    }
+  };
+
   useEffect(() => {
     fetchPoll();
-  }, [params.id]);
+    fetchComments();
+  }, [params.id, isAdmin, isModerator]);
 
   const deletePoll = async (pollId: string) => {
     try {
@@ -265,24 +305,14 @@ export default function PollPage() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank you for voting!</h3>
                 <p className="text-gray-600 mb-4">Your vote has been recorded successfully.</p>
                 
-                {/* Show current results */}
-                <div className="mt-6 text-left">
-                  <h4 className="font-semibold text-gray-900 mb-3">Current Results ({poll.total_votes || 0} total votes)</h4>
-                  <div className="space-y-2">
-                    {poll.poll_options?.map((option: any) => (
-                      <div key={option.id} className="flex items-center justify-between p-3 border rounded-lg bg-gray-50">
-                        <span className="font-medium">{option.text}</span>
-                        <span className="text-gray-700 font-semibold">
-                          {option.votes_count || 0} votes
-                          {poll.total_votes && poll.total_votes > 0 && (
-                            <span className="text-gray-500 ml-1">
-                              ({((option.votes_count || 0) / poll.total_votes * 100).toFixed(1)}%)
-                            </span>
-                          )}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                {/* Show current results with chart */}
+                <div className="mt-6">
+                  <PollResultsChart
+                    results={chartResults}
+                    pollTitle={poll.title}
+                    totalVotes={poll.total_votes || 0}
+                    className="mb-6"
+                  />
                 </div>
                 
                 <div className="mt-6 flex space-x-2">
@@ -293,16 +323,11 @@ export default function PollPage() {
                   >
                     Vote Again
                   </Button>
-                  <Button 
-                    variant="outline"
-                    onClick={() => {
-                      // TODO: Show detailed results page
-                      toast.info('Detailed results page coming soon!');
-                    }}
-                    className="flex-1"
-                  >
-                    View Detailed Results
-                  </Button>
+                  <Link href={`/polls/${poll.id}/results`}>
+                    <Button variant="outline" className="flex-1">
+                      View Detailed Results
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -344,7 +369,7 @@ export default function PollPage() {
                   </div>
                 ))}
                 
-                <div className="pt-4">
+                <div className="pt-4 space-y-3">
                   <Button 
                     className="w-full" 
                     onClick={handleVote}
@@ -352,11 +377,56 @@ export default function PollPage() {
                   >
                     {voting ? 'Submitting Vote...' : 'Submit Vote'}
                   </Button>
+                  
+                  {poll.total_votes > 0 && (
+                    <Button 
+                      variant="outline"
+                      className="w-full" 
+                      onClick={() => setShowResults(true)}
+                    >
+                      View Current Results ({poll.total_votes} votes)
+                    </Button>
+                  )}
                 </div>
               </>
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Results Modal/Section */}
+      {showResults && !hasVoted && (
+        <div className="mt-8">
+          <PollResultsChart
+            results={chartResults}
+            pollTitle={poll.title}
+            totalVotes={poll.total_votes || 0}
+          />
+          <div className="text-center mt-4">
+            <Button 
+              variant="outline"
+              onClick={() => setShowResults(false)}
+            >
+              Back to Voting
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Comment Moderation Section (Admin/Moderator only) */}
+      {(isAdmin || isModerator) && (
+        <div className="mt-8">
+          <CommentModeration 
+            comments={comments} 
+            userRole={isAdmin ? 'admin' : 'moderator'}
+            pollId={poll.id}
+          />
+        </div>
+      )}
+
+      {/* Comments Section */}
+      <div className="mt-8">
+        <CommentList pollId={poll.id} />
       </div>
 
       <div className="mt-8 text-center">
