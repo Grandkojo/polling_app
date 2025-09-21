@@ -1,4 +1,17 @@
+import { Suspense } from "react";
 import LoginForm from "@/components/LoginForm";
+
+function LoginFormWrapper() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
 
 export default function LoginPage() {
   return (
@@ -18,7 +31,7 @@ export default function LoginPage() {
             </a>
           </p>
         </div>
-        <LoginForm />
+        <LoginFormWrapper />
       </div>
     </div>
   );
