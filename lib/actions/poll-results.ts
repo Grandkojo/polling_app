@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/server';
 import { PollResult } from '@/types/database';
 
 export async function getPollResults(pollId: string): Promise<{
@@ -10,7 +10,7 @@ export async function getPollResults(pollId: string): Promise<{
 }> {
   try {
     // Use the database function to get poll results
-    const { data, error } = await supabase.rpc('get_poll_results', {
+    const { data, error } = await supabaseAdmin.rpc('get_poll_results', {
       poll_uuid: pollId
     });
 
@@ -46,7 +46,7 @@ export async function getPollWithResults(pollId: string): Promise<{
 }> {
   try {
     // Get poll details
-    const { data: poll, error: pollError } = await supabase
+    const { data: poll, error: pollError } = await supabaseAdmin
       .from('polls')
       .select(`
         id,

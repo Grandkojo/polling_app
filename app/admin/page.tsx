@@ -64,96 +64,103 @@ export default async function AdminDashboard() {
   };
 
   return (
-    <div className="container mx-auto py-8 space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Manage users, polls, and system settings
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+              Admin Dashboard
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600">
+              Manage users, polls, and system settings
+            </p>
+          </div>
+          <Badge variant="destructive" className="text-xs sm:text-sm px-3 py-1 w-fit">
+            Admin Access
+          </Badge>
         </div>
-        <Badge variant="destructive" className="text-sm">
-          Admin Access
-        </Badge>
-      </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Total Users</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.userCount || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-gray-900">{stats?.userCount || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               Registered users
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Admins</CardTitle>
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Admins</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.adminCount || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-red-600">{stats?.adminCount || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               Admin users
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Moderators</CardTitle>
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Moderators</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.moderatorCount || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-orange-600">{stats?.moderatorCount || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               Moderator users
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Polls</CardTitle>
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Total Polls</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.pollCount || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{stats?.pollCount || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               Created polls
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Comments</CardTitle>
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Total Comments</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalComments || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-green-600">{stats?.totalComments || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               All comments
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Comments Today</CardTitle>
+        <Card className="hover:shadow-lg transition-shadow duration-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-700">Comments Today</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.commentsToday || 0}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="pt-0">
+            <div className="text-2xl sm:text-3xl font-bold text-purple-600">{stats?.commentsToday || 0}</div>
+            <p className="text-xs text-gray-500 mt-1">
               Today's activity
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* User Management */}
-      <UserManagement />
+        {/* User Management Section */}
+        <div className="mt-8">
+          <UserManagement />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
@@ -19,8 +19,12 @@ export const metadata: Metadata = {
   description: "Build engaging polls, collect responses, and analyze results in real-time. Perfect for teams, events, and community engagement.",
   keywords: ["polls", "voting", "surveys", "engagement", "real-time"],
   authors: [{ name: "Polling App Team" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

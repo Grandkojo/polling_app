@@ -114,46 +114,54 @@ export default function UserManagement({ className }: UserManagementProps) {
   }
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>User Management</CardTitle>
-        <CardDescription>
-          Manage user roles and permissions. You are currently logged in as: {user?.name} ({user?.role})
+    <Card className={`${className} shadow-lg`}>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold text-gray-900">User Management</CardTitle>
+        <CardDescription className="text-sm text-gray-600">
+          Manage user roles and permissions. You are currently logged in as: <span className="font-medium">{user?.name}</span> ({user?.role})
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-0">
         {error && (
-          <Alert className="mb-4">
-            <AlertDescription>{error}</AlertDescription>
+          <Alert className="mb-4 border-red-200 bg-red-50">
+            <AlertDescription className="text-red-800">{error}</AlertDescription>
           </Alert>
         )}
         
-        <div className="space-y-4">
-          {users.map((user) => (
+        <div className="space-y-3 sm:space-y-4">
+          {users.map((userItem) => (
             <div
-              key={user.id}
-              className="flex items-center justify-between p-4 border rounded-lg"
+              key={userItem.id}
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow duration-200"
             >
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-medium">{user.name}</h3>
-                  <Badge variant={getRoleBadgeVariant(user.role)}>
-                    {user.role}
+              <div className="flex-1 mb-3 sm:mb-0">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                  <h3 className="font-medium text-gray-900 text-base">{userItem.name}</h3>
+                  <Badge 
+                    variant={getRoleBadgeVariant(userItem.role)}
+                    className="text-xs px-2 py-1 w-fit"
+                  >
+                    {userItem.role}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">{user.email}</p>
-                <p className="text-xs text-muted-foreground">
-                  Joined: {new Date(user.created_at).toLocaleDateString()}
+                <p 
+                  className="text-sm text-gray-600 mb-1 truncate" 
+                  title={userItem.email}
+                >
+                  {userItem.email}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Joined: {new Date(userItem.created_at).toLocaleDateString()}
                 </p>
               </div>
               
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                 <Select
-                  value={user.role}
-                  onValueChange={(value: UserRole) => updateUserRole(user.id, value)}
-                  disabled={updating === user.id || user.id === user?.id}
+                  value={userItem.role}
+                  onValueChange={(value: UserRole) => updateUserRole(userItem.id, value)}
+                  disabled={updating === userItem.id || userItem.id === user?.id}
                 >
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-full sm:w-32 min-h-[40px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -163,8 +171,11 @@ export default function UserManagement({ className }: UserManagementProps) {
                   </SelectContent>
                 </Select>
                 
-                {updating === user.id && (
-                  <div className="text-sm text-muted-foreground">Updating...</div>
+                {updating === userItem.id && (
+                  <div className="text-sm text-gray-500 flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                    Updating...
+                  </div>
                 )}
               </div>
             </div>
