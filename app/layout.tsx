@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: "Build engaging polls, collect responses, and analyze results in real-time. Perfect for teams, events, and community engagement.",
     images: [
       {
-        url: "/api/og",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Polling App - Create and Share Polls",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     creator: "@grandkojo", 
     title: "Polling App - Create and Share Polls Instantly",
     description: "Build engaging polls, collect responses, and analyze results in real-time. Perfect for teams, events, and community engagement.",
-    images: ["/api/og"],
+    images: ["/og-image.png"], // Replace with your custom image
   },
   metadataBase: new URL("https://polling.grandkojo.my"),
 };
