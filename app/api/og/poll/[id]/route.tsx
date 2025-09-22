@@ -8,18 +8,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { data: poll, error } = await supabaseAdmin
+    // Get poll data
+    const { data: poll, error: pollError } = await supabaseAdmin
       .from('polls')
-      .select(`
-        title,
-        description,
-        poll_options(title),
-        votes(count)
-      `)
+      .select('title, description')
       .eq('id', params.id)
       .single();
 
-    if (error || !poll) {
+    if (pollError || !poll) {
       return new ImageResponse(
         (
           <div
@@ -46,8 +42,17 @@ export async function GET(
       );
     }
 
-    const voteCount = poll.votes?.[0]?.count || 0;
-    const optionCount = poll.poll_options?.length || 0;
+    // Get option count
+    const { count: optionCount } = await supabaseAdmin
+      .from('poll_options')
+      .select('*', { count: 'exact', head: true })
+      .eq('poll_id', params.id);
+
+    // Get vote count
+    const { count: voteCount } = await supabaseAdmin
+      .from('votes')
+      .select('*', { count: 'exact', head: true })
+      .eq('poll_id', params.id);
 
     return new ImageResponse(
       (
@@ -208,7 +213,7 @@ export async function GET(
               opacity: 0.6,
             }}
           >
-            polling-app.vercel.app
+            polling.grandkojo.my
           </div>
         </div>
       ),

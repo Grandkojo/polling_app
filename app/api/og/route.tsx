@@ -190,7 +190,7 @@ export async function GET() {
             opacity: 0.6,
           }}
         >
-          polling-app.vercel.app
+          polling.grandkojo.my
         </div>
       </div>
     ),
