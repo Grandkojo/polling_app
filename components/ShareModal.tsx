@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Copy, Share2, ExternalLink, QrCode, Download } from 'lucide-react';
+import { Copy, Share2, ExternalLink, QrCode, Download, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -28,7 +28,7 @@ export default function ShareModal({ pollId, pollTitle, isOpen, onClose, userId 
   const [shareUrl, setShareUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isReusingExisting, setIsReusingExisting] = useState(false);
-  const [activeTab, setActiveTab] = useState<'link' | 'qr'>('link');
+  const [activeTab, setActiveTab] = useState<'link' | 'qr' | 'preview'>('link');
 
   // Generate share code when modal opens
   useEffect(() => {
@@ -194,6 +194,19 @@ export default function ShareModal({ pollId, pollTitle, isOpen, onClose, userId 
               QR Code
             </div>
           </button>
+          <button
+            onClick={() => setActiveTab('preview')}
+            className={`flex-1 py-2 px-4 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'preview'
+                ? 'border-indigo-500 text-indigo-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <Eye className="h-4 w-4" />
+              Preview
+            </div>
+          </button>
         </div>
 
         <div className="space-y-4">
@@ -331,6 +344,84 @@ export default function ShareModal({ pollId, pollTitle, isOpen, onClose, userId 
                 <p className="text-xs text-gray-500">
                   The QR code contains the same share link as above
                 </p>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'preview' && (
+            <div className="space-y-4">
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Social Media Preview</h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  This is how your poll will appear when shared on social media
+                </p>
+              </div>
+              
+              {/* Preview Card */}
+              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-600 relative">
+                  <img 
+                    src={`/api/og/poll/${pollId}`}
+                    alt={`Preview for ${pollTitle}`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="text-2xl mb-2">📊</div>
+                      <div className="text-lg font-semibold">Loading Preview...</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h4 className="font-semibold text-gray-900 mb-1">{pollTitle}</h4>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Vote on this poll - Multiple options available
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <span>polling-app.vercel.app</span>
+                    <span>•</span>
+                    <span>Polling App</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-sm font-medium text-gray-900 mb-2">Supported Platforms</h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>Facebook</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>Twitter</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>LinkedIn</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>Discord</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>Slack</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span>Telegram</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-md">
+                  <strong>Tip:</strong> When you share the link, platforms will automatically fetch this preview image and display it with your poll title and description.
+                </div>
               </div>
             </div>
           )}

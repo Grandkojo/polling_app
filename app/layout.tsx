@@ -20,6 +20,31 @@ export const metadata: Metadata = {
   keywords: ["polls", "voting", "surveys", "engagement", "real-time"],
   authors: [{ name: "Polling App Team" }],
   robots: "index, follow",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://polling.grandkojo.my",
+    siteName: "Polling App",
+    title: "Polling App - Create and Share Polls Instantly",
+    description: "Build engaging polls, collect responses, and analyze results in real-time. Perfect for teams, events, and community engagement.",
+    images: [
+      {
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "Polling App - Create and Share Polls",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@grandkojo", 
+    creator: "@grandkojo", 
+    title: "Polling App - Create and Share Polls Instantly",
+    description: "Build engaging polls, collect responses, and analyze results in real-time. Perfect for teams, events, and community engagement.",
+    images: ["/api/og"],
+  },
+  metadataBase: new URL("https://polling.grandkojo.my"),
 };
 
 export const viewport: Viewport = {
