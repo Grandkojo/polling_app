@@ -93,18 +93,18 @@ export default function HomePage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 max-w-md mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-lg mx-auto">
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-indigo-600">10K+</div>
-                <div className="text-sm text-gray-600">Active Users</div>
+                <div className="text-2xl sm:text-3xl font-bold text-indigo-600">Growing</div>
+                <div className="text-sm text-gray-600">Community</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-purple-600">50K+</div>
-                <div className="text-sm text-gray-600">Polls Created</div>
+                <div className="text-2xl sm:text-3xl font-bold text-purple-600">Real-time</div>
+                <div className="text-sm text-gray-600">Results</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-blue-600">1M+</div>
-                <div className="text-sm text-gray-600">Votes Cast</div>
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600">Free</div>
+                <div className="text-sm text-gray-600">to Start</div>
               </div>
             </div>
           </div>
